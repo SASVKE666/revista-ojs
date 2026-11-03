@@ -1,0 +1,2093 @@
+// styles/custom.less
+//
+// Tema PARDALIS para OJS 3.3 — estilo "Laborex" adaptado a revista científica.
+//
+// Se carga DESPUÉS del tema padre (Default), así que estas reglas ganan por
+// orden de cascada. Las secciones están numeradas; la paleta es la sección 1:
+// cambia esos colores y se actualiza todo el tema.
+//
+// NOTA LESS: el compilador de OJS es antiguo. Por eso las funciones CSS
+// modernas (calc con max, clamp, minmax, clip-path, radial-gradient) van
+// escapadas como ~"..." para que pasen tal cual al navegador.
+
+// ---------------------------------------------------------------
+// 1) Paleta y medidas
+// ---------------------------------------------------------------
+@blue:        #1d4fd8;   // azul real (diagonal del hero, estadísticas)
+@blue-dark:   #153aa8;
+@navy:        #0f2352;   // títulos y texto fuerte
+@navy-deep:   #0a1a3f;   // pie de página
+@teal:        #1fb5a7;   // botones y acentos (turquesa Laborex)
+@teal-dark:   #17998d;
+@mint:        #eaf7f6;   // fondos suaves
+@mint-2:      #f4fbfa;
+@bg-soft:     #f6fafb;
+@text:        #44546a;
+@muted:       #6b7a90;
+@line:        #dbe5ee;
+@radius:      16px;
+@shadow:      0 10px 30px rgba(15, 35, 82, 0.08);
+@shadow-lg:   0 20px 50px rgba(15, 35, 82, 0.16);
+@container:   1180px;
+@font-title:  'Poppins', 'Inter', sans-serif;
+@font-text:   'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+
+// ---------------------------------------------------------------
+// 2) Base y tipografía
+// ---------------------------------------------------------------
+// El tema Default usa html { font-size: 14px }, por eso los tamaños de este
+// archivo van en px (con rem saldrían más pequeños de lo diseñado).
+
+html,
+body {
+	font-family: @font-text;
+	color: @text;
+	background: #ffffff;
+}
+
+body.pardalis_home {
+	background: #ffffff;
+}
+
+.pkp_structure_main h1,
+.pkp_structure_main h2,
+.pkp_structure_main h3,
+.pkp_structure_main h4,
+.page_title,
+.pkp_page_title {
+	font-family: @font-title;
+	font-weight: 700;
+	color: @navy;
+}
+
+a {
+	color: @blue;
+}
+a:hover,
+a:focus {
+	color: @teal-dark;
+}
+
+// Defensa: si en Ajustes > Apariencia > Avanzado hay una hoja de estilo de la revista
+// hecha para otro tema (p. ej. 'a { color: verde }' o 'body { font-family: ... }'),
+// estas reglas, un poco más específicas, mantienen el aspecto del tema.
+html body {
+	font-family: @font-text;
+}
+body a {
+	color: @blue;
+}
+body a:hover,
+body a:focus {
+	color: @teal-dark;
+}
+
+// ---------------------------------------------------------------
+// 3) Encabezado: franja superior (logo + contacto + botón)
+//    Móvil: barra azul marino con el botón de menú del tema Default.
+//    Escritorio (>= 992px): franja menta arriba + barra blanca de menú.
+// ---------------------------------------------------------------
+.pkp_structure_head {
+	background: @navy;
+	border-bottom: none;
+	box-shadow: 0 2px 12px rgba(15, 35, 82, 0.10);
+	position: relative;
+	z-index: 50;
+}
+
+.pkp_site_nav_menu {
+	background: @navy;
+}
+
+.pkp_site_name .is_text {
+	display: inline-flex;
+	align-items: center;
+	gap: 10px;
+	font-family: @font-title;
+	font-weight: 700;
+	color: #ffffff;
+	text-decoration: none;
+	letter-spacing: 0.2px;
+}
+
+.pardalis_logo_icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 34px;
+	height: 34px;
+	border-radius: 50%;
+	background: linear-gradient(135deg, @teal, @blue);
+	color: #ffffff;
+	font-size: 16px;
+	line-height: 1;
+	flex: 0 0 auto;
+}
+
+.pardalis_topinfo {
+	display: none;
+}
+
+// Menú móvil: enlaces claros sobre azul marino
+.pkp_site_nav_menu a,
+.pkp_site_nav_menu .pkp_nav_list a {
+	color: #ffffff;
+}
+
+// ---- Escritorio ----
+@media (min-width: 992px) {
+
+	body .pkp_structure_head {
+		background: #ffffff;
+	}
+
+	body .pkp_structure_head .pkp_head_wrapper {
+		width: 100%;
+		max-width: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	// Franja superior (menta)
+	body .pkp_structure_head .pardalis_topbar {
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 24px;
+		width: 100%;
+		max-width: none;
+		height: auto;
+		margin: 0;
+		padding: 14px ~"max(24px, calc((100% - 1180px) / 2))";
+		background: @mint;
+	}
+
+	.pkp_site_nav_toggle {
+		display: none;
+	}
+
+	body .pkp_structure_head .pkp_site_name {
+		position: static;
+		width: auto;
+		flex: 0 0 auto;
+		padding: 0;
+		margin: 0;
+		font-size: 16px;
+		overflow: visible;
+		background: transparent;
+	}
+
+	body .pkp_structure_head .pkp_site_name .is_text {
+		font-size: 25.5px;
+		line-height: 1.2;
+		color: @navy;
+	}
+
+	body .pkp_structure_head .pkp_site_name .is_img {
+		margin: 0;
+	}
+
+	body .pkp_structure_head .pkp_site_name .is_img img {
+		max-height: 56px;
+	}
+
+	.pardalis_topinfo {
+		display: flex;
+		align-items: center;
+		justify-content: flex-end;
+		flex-wrap: wrap;
+		gap: 10px 28px;
+		font-size: 14px;
+		color: @navy;
+	}
+
+	.pardalis_topinfo_item {
+		display: inline-flex;
+		align-items: center;
+		gap: 8px;
+		color: @navy;
+	}
+
+	.pardalis_topinfo_item .fa {
+		color: @teal;
+		font-size: 16px;
+	}
+
+	.pardalis_topinfo_item a {
+		color: @navy;
+		text-decoration: none;
+	}
+
+	.pardalis_topinfo_item a:hover {
+		color: @teal-dark;
+	}
+
+	// Barra de navegación (blanca)
+	body .pkp_structure_head .pkp_site_nav_menu {
+		box-sizing: border-box;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 16px;
+		width: 100%;
+		margin: 0;
+		padding: 0 ~"max(24px, calc((100% - 1180px) / 2))";
+		background: #ffffff;
+		box-shadow: 0 6px 18px rgba(15, 35, 82, 0.06);
+	}
+
+	body .pkp_structure_head .pkp_navigation_primary_row {
+		flex: 1 1 auto;
+		min-width: 0;
+	}
+
+	body .pkp_structure_head .pkp_navigation_primary_wrapper {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		width: 100%;
+		margin: 0;
+		padding: 0;
+	}
+
+	body .pkp_structure_head .pkp_navigation_primary {
+		max-width: none;
+		margin: 0;
+		padding: 0;
+		text-align: left;
+	}
+
+	body .pkp_structure_head .pkp_navigation_primary > li > a {
+		margin: 0;
+		padding: 20px 14px 18px;
+		font-family: @font-title;
+		font-size: 14.5px;
+		font-weight: 600;
+		color: @navy;
+		border-bottom: 3px solid transparent;
+		border-radius: 0;
+		background: transparent;
+		transition: color 0.15s ease, border-color 0.15s ease;
+	}
+
+	body .pkp_structure_head .pkp_navigation_primary > li:first-child > a,
+	body .pkp_structure_head .pkp_navigation_primary > li:last-child > a {
+		margin: 0;
+	}
+
+	body .pkp_structure_head .pkp_navigation_primary > li > a:hover,
+	body .pkp_structure_head .pkp_navigation_primary > li > a:focus {
+		color: @teal-dark;
+		border-bottom-color: @teal;
+		background: transparent;
+	}
+
+	// Submenús desplegables
+	body .pkp_structure_head .pkp_nav_list ul {
+		border-radius: 12px;
+		box-shadow: 0 12px 30px rgba(15, 35, 82, 0.15);
+		border-top: 3px solid @teal;
+	}
+
+	body .pkp_structure_head .pkp_nav_list ul a {
+		color: @navy;
+	}
+
+	// Buscador: botón redondo con lupa
+	body .pkp_structure_head .pkp_navigation_search_wrapper {
+		margin: 0;
+		padding: 0;
+		border: none;
+	}
+
+	body .pkp_structure_head .pkp_search_desktop {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 38px;
+		height: 38px;
+		padding: 0;
+		border-radius: 50%;
+		background: @mint;
+		color: @navy;
+		text-decoration: none;
+		transition: background-color 0.15s ease, color 0.15s ease;
+	}
+
+	body .pkp_structure_head .pkp_search_desktop:hover,
+	body .pkp_structure_head .pkp_search_desktop:focus {
+		background: @teal;
+		color: #ffffff;
+	}
+
+	.pardalis_search_label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0, 0, 0, 0);
+	}
+
+	// Menú de usuario (Registrarse / Acceder): a la derecha de la barra
+	body .pkp_structure_head .pkp_navigation_user_wrapper {
+		position: static;
+		transform: none;
+		width: auto;
+		padding: 0;
+		margin: 0;
+		flex: 0 0 auto;
+	}
+
+	body .pkp_structure_head .pkp_navigation_user {
+		width: auto;
+		padding: 0;
+		text-align: right;
+		font-size: 13.5px;
+	}
+
+	body .pkp_structure_head .pkp_navigation_user > li > a {
+		color: @muted;
+		font-weight: 600;
+		border-radius: 999px;
+		padding: 8px 12px;
+		margin: 0;
+	}
+
+	body .pkp_structure_head .pkp_navigation_user > li > a:hover,
+	body .pkp_structure_head .pkp_navigation_user > li > a:focus {
+		color: @teal-dark;
+		background: @mint;
+	}
+
+	body .pkp_structure_head .pkp_navigation_user ul a {
+		color: @navy;
+	}
+}
+
+// ---------------------------------------------------------------
+// 3b) Navegación autosuficiente
+//     No depende de que cargue el CSS base del tema Default: define listas,
+//     submenús (el JS del Default les agrega la clase .dropdown-menu de
+//     Bootstrap y .show al abrirlos), botón hamburguesa y enlaces de salto.
+// ---------------------------------------------------------------
+.pkp_screen_reader {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: -1px;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0, 0, 0, 0);
+	white-space: nowrap;
+	border: 0;
+}
+
+.cmp_skip_to_content a {
+	position: absolute;
+	left: -9999px;
+	top: auto;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+}
+.cmp_skip_to_content a:focus {
+	position: fixed;
+	left: 12px;
+	top: 12px;
+	z-index: 100000;
+	width: auto;
+	height: auto;
+	padding: 10px 16px;
+	border-radius: 10px;
+	background: #ffffff;
+	box-shadow: @shadow-lg;
+	font-weight: 600;
+	color: @navy;
+}
+
+body .pkp_structure_head .pkp_nav_list,
+body .pkp_structure_head .pkp_nav_list ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+body .pkp_structure_head .pkp_nav_list li {
+	margin: 0;
+}
+body .pkp_structure_head .pkp_nav_list a,
+body .pkp_structure_head .pkp_search_desktop {
+	text-decoration: none;
+}
+
+// ---- Escritorio: lista horizontal + submenús flotantes ----
+@media (min-width: 992px) {
+
+	body .pkp_structure_head .pkp_nav_list > li {
+		display: inline-block;
+		position: relative;
+	}
+
+	body .pkp_structure_head .pkp_navigation_primary > li > a {
+		display: block;
+	}
+
+	body .pkp_structure_head .pkp_nav_list ul {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		z-index: 1000;
+		float: none;
+		min-width: 230px;
+		margin: 0;
+		padding: 8px 0;
+		background: #ffffff;
+		border: 0;
+		border-top: 3px solid @teal;
+		border-radius: 0 0 12px 12px;
+		box-shadow: 0 12px 30px rgba(15, 35, 82, 0.15);
+		text-align: left;
+	}
+
+	// Se abren con .show (click, lo pone el JS) y también al pasar el cursor/teclado
+	body .pkp_structure_head .pkp_nav_list ul.show,
+	body .pkp_structure_head .pkp_nav_list > li:hover > ul,
+	body .pkp_structure_head .pkp_nav_list > li:focus-within > ul {
+		display: block;
+	}
+
+	// El submenú del usuario se alinea a la derecha
+	body .pkp_structure_head .pkp_navigation_user ul {
+		left: auto;
+		right: 0;
+	}
+
+	body .pkp_structure_head .pkp_nav_list ul li {
+		display: block;
+	}
+
+	body .pkp_structure_head .pkp_nav_list ul a {
+		display: block;
+		padding: 9px 20px;
+		font-size: 14px;
+		font-weight: 500;
+		line-height: 1.4;
+		white-space: nowrap;
+		color: @navy;
+		background: transparent;
+	}
+
+	body .pkp_structure_head .pkp_nav_list ul a:hover,
+	body .pkp_structure_head .pkp_nav_list ul a:focus {
+		background: @mint;
+		color: @teal-dark;
+	}
+
+	body .pkp_structure_head .pkp_navigation_user > li {
+		display: inline-block;
+		position: relative;
+	}
+}
+
+// ---- Móvil / tablet: barra azul marino + panel desplegable ----
+@media (max-width: 991px) {
+
+	body .pkp_structure_head {
+		background: @navy;
+	}
+
+	body .pkp_structure_head .pkp_head_wrapper {
+		position: relative;
+		padding: 0;
+	}
+
+	body .pkp_structure_head .pkp_site_name_wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+		width: 100%;
+		height: auto;
+		min-height: 56px;
+		margin: 0;
+		padding: 8px 16px 8px 60px;
+	}
+
+	body .pkp_structure_head .pkp_site_name {
+		position: static;
+		width: auto;
+		margin: 0;
+		padding: 0;
+		overflow: visible;
+		white-space: normal;
+		font-size: 16px;
+	}
+
+	body .pkp_structure_head .pkp_site_name .is_img img {
+		display: block;
+		width: auto;
+		max-width: 100%;
+		max-height: 40px;
+	}
+
+	// Botón hamburguesa
+	body .pkp_structure_head .pkp_site_nav_toggle {
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: 1001;
+		width: 56px;
+		height: 100%;
+		min-height: 56px;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+	}
+	body .pkp_structure_head .pkp_site_nav_toggle > span {
+		display: block;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		width: 22px;
+		height: 2px;
+		margin: -1px 0 0 -11px;
+		padding: 0;
+		border: 0;
+		background: #ffffff;
+		font-size: 0;
+		color: transparent;
+		text-indent: 0;
+		overflow: visible;
+		transform: none;
+	}
+	body .pkp_structure_head .pkp_site_nav_toggle > span:before,
+	body .pkp_structure_head .pkp_site_nav_toggle > span:after {
+		content: "";
+		display: block;
+		position: absolute;
+		left: 0;
+		width: 100%;
+		height: 2px;
+		margin: 0;
+		background: #ffffff;
+		transition: transform 0.2s ease, top 0.2s ease;
+	}
+	body .pkp_structure_head .pkp_site_nav_toggle > span:before { top: -7px; }
+	body .pkp_structure_head .pkp_site_nav_toggle > span:after  { top: 7px; }
+
+	body .pkp_structure_head .pkp_site_nav_toggle.pkp_site_nav_toggle--transform > span {
+		background: transparent;
+	}
+	body .pkp_structure_head .pkp_site_nav_toggle.pkp_site_nav_toggle--transform > span:before {
+		top: 0;
+		transform: rotate(45deg);
+	}
+	body .pkp_structure_head .pkp_site_nav_toggle.pkp_site_nav_toggle--transform > span:after {
+		top: 0;
+		transform: rotate(-45deg);
+	}
+
+	// Panel del menú
+	body .pkp_structure_head .pkp_site_nav_menu {
+		display: none;
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		z-index: 9999;
+		width: auto;
+		max-height: 80vh;
+		margin: 0;
+		padding: 8px 16px 18px;
+		overflow-y: auto;
+		background: @navy;
+		box-shadow: 0 16px 30px rgba(5, 15, 45, 0.35);
+	}
+	body .pkp_structure_head .pkp_site_nav_menu.pkp_site_nav_menu--isOpen {
+		display: block;
+	}
+
+	body .pkp_structure_head .pkp_nav_list li,
+	body .pkp_structure_head .pkp_nav_list ul li {
+		display: block;
+	}
+
+	body .pkp_structure_head .pkp_nav_list a {
+		display: block;
+		padding: 12px 4px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		font-size: 15px;
+		font-weight: 600;
+		color: #ffffff;
+	}
+
+	body .pkp_structure_head .pkp_nav_list ul {
+		display: block;
+		position: static;
+		min-width: 0;
+		padding: 0 0 0 16px;
+		border: 0;
+		border-radius: 0;
+		background: transparent;
+		box-shadow: none;
+	}
+
+	body .pkp_structure_head .pkp_nav_list ul a {
+		font-size: 14px;
+		font-weight: 500;
+		color: rgba(255, 255, 255, 0.85);
+	}
+
+	body .pkp_structure_head .pkp_navigation_search_wrapper {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+	body .pkp_structure_head .pkp_search_desktop {
+		display: block;
+		padding: 12px 4px;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+		font-weight: 600;
+		color: #ffffff;
+	}
+
+	body .pkp_structure_head .pkp_navigation_user_wrapper {
+		margin-top: 8px;
+	}
+	body .pkp_structure_head .pkp_navigation_user {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
+}
+
+// ---------------------------------------------------------------
+// 4) Botones
+// ---------------------------------------------------------------
+.pardalis_btn,
+a.pardalis_btn {
+	display: inline-block;
+	padding: 13px 28px;
+	border: 1.5px solid transparent;
+	border-radius: 999px;
+	font-family: @font-title;
+	font-weight: 600;
+	font-size: 14.5px;
+	line-height: 1.2;
+	text-decoration: none;
+	text-align: center;
+	cursor: pointer;
+	transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pardalis_btn_sm,
+a.pardalis_btn_sm {
+	padding: 10px 22px;
+	font-size: 13px;
+}
+
+a.pardalis_btn_primary,
+a.pardalis_btn_primary:visited {
+	background: @teal;
+	color: #ffffff;
+	box-shadow: 0 8px 18px fade(@teal, 30%);
+}
+a.pardalis_btn_primary:hover,
+a.pardalis_btn_primary:focus {
+	background: @teal-dark;
+	color: #ffffff;
+	transform: translateY(-1px);
+}
+
+a.pardalis_btn_outline,
+a.pardalis_btn_outline:visited {
+	background: rgba(255, 255, 255, 0.55);
+	border-color: @line;
+	color: @navy;
+}
+a.pardalis_btn_outline:hover,
+a.pardalis_btn_outline:focus {
+	border-color: @teal;
+	color: @teal-dark;
+	background: #ffffff;
+}
+
+a.pardalis_btn_soft,
+a.pardalis_btn_soft:visited {
+	background: @bg-soft;
+	border-color: transparent;
+	color: @navy;
+	box-shadow: 0 2px 6px rgba(15, 35, 82, 0.06);
+}
+a.pardalis_btn_soft:hover,
+a.pardalis_btn_soft:focus {
+	background: @teal;
+	color: #ffffff;
+}
+
+a.pardalis_btn_white,
+a.pardalis_btn_white:visited {
+	background: #ffffff;
+	color: @blue;
+}
+a.pardalis_btn_white:hover,
+a.pardalis_btn_white:focus {
+	background: @mint;
+	color: @blue-dark;
+}
+
+a.pardalis_btn_ghost,
+a.pardalis_btn_ghost:visited {
+	background: transparent;
+	border-color: rgba(255, 255, 255, 0.7);
+	color: #ffffff;
+}
+a.pardalis_btn_ghost:hover,
+a.pardalis_btn_ghost:focus {
+	background: rgba(255, 255, 255, 0.15);
+	color: #ffffff;
+}
+
+// Botones nativos de OJS (formularios, login, etc.)
+.pkp_button,
+button.pkp_button,
+a.pkp_button,
+.cmp_button {
+	border-radius: 999px;
+	font-weight: 600;
+}
+
+.pkp_button.pkp_button_primary,
+.pkp_button.submitFormButton,
+.pkp_button.is_primary,
+button.submit,
+input[type="submit"] {
+	background: @teal;
+	border-color: @teal;
+	color: #ffffff;
+}
+.pkp_button.pkp_button_primary:hover,
+.pkp_button.submitFormButton:hover,
+.pkp_button.is_primary:hover,
+button.submit:hover,
+input[type="submit"]:hover {
+	background: @teal-dark;
+	border-color: @teal-dark;
+}
+
+// ---------------------------------------------------------------
+// 5) Portada: estructura general
+// ---------------------------------------------------------------
+.pardalis_home_main {
+	width: 100%;
+}
+
+.pardalis_container {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: @container;
+	margin: 0 auto;
+	padding: 0 24px;
+}
+
+.pardalis_section {
+	padding: 84px 0;
+	background: #ffffff;
+}
+
+.pardalis_section_mint {
+	background: @mint;
+	background-image: ~"radial-gradient(rgba(31,181,167,.18) 1.5px, transparent 2px)";
+	background-size: 26px 26px;
+}
+
+.pardalis_section_head {
+	text-align: center;
+	margin-bottom: 48px;
+}
+
+.pardalis_label {
+	display: inline-block;
+	margin-bottom: 12px;
+	font-family: @font-title;
+	font-size: 11.5px;
+	font-weight: 600;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: @teal-dark;
+}
+.pardalis_label:before {
+	content: "";
+	display: inline-block;
+	width: 28px;
+	height: 8px;
+	margin-right: 10px;
+	vertical-align: middle;
+	background-image: ~"radial-gradient(circle at 4px 4px, #1fb5a7 2px, transparent 2.5px), radial-gradient(circle at 14px 4px, #1fb5a7 2px, transparent 2.5px), radial-gradient(circle at 24px 4px, #1fb5a7 2px, transparent 2.5px)";
+	background-repeat: no-repeat;
+}
+
+.pkp_structure_main h2.pardalis_section_title,
+.pardalis_section_title {
+	max-width: 760px;
+	margin: 0 auto;
+	font-family: @font-title;
+	font-size: 32px;
+	line-height: 1.25;
+	font-weight: 700;
+	color: @navy;
+	text-align: center;
+}
+
+.pkp_structure_main h2.pardalis_section_title.pardalis_left,
+.pardalis_section_title.pardalis_left {
+	margin: 0 0 18px;
+	text-align: left;
+}
+
+// ---------------------------------------------------------------
+// 6) Hero
+// ---------------------------------------------------------------
+.pardalis_hero {
+	position: relative;
+	padding: 64px 0 80px;
+	overflow: hidden;
+}
+
+.pardalis_hero_bg {
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-color: #e3f1f4;
+	background-image: linear-gradient(135deg, #e6f4f6 0%, #f4f9ff 100%);
+	background-size: cover;
+	background-position: center;
+}
+
+// Diagonal azul a la izquierda (como en la plantilla de referencia)
+.pardalis_hero_bg:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 64%;
+	background: linear-gradient(120deg, @blue-dark 0%, @blue 100%);
+	opacity: 0.96;
+	clip-path: ~"polygon(0 0, 100% 0, 74% 100%, 0 100%)";
+}
+
+// Puntos decorativos
+.pardalis_hero_bg:after {
+	content: "";
+	position: absolute;
+	right: 5%;
+	bottom: 8%;
+	width: 190px;
+	height: 190px;
+	background-image: ~"radial-gradient(rgba(31,181,167,.55) 2px, transparent 2.5px)";
+	background-size: 16px 16px;
+}
+
+.pardalis_hero .pardalis_container {
+	position: relative;
+	z-index: 2;
+}
+
+.pardalis_hero_card {
+	display: flex;
+	align-items: center;
+	gap: 48px;
+	padding: 52px 56px;
+	background: rgba(255, 255, 255, 0.86);
+	-webkit-backdrop-filter: blur(10px);
+	backdrop-filter: blur(10px);
+	border: 1px solid rgba(255, 255, 255, 0.8);
+	border-radius: 24px;
+	box-shadow: @shadow-lg;
+}
+
+.pardalis_hero_text {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.pardalis_eyebrow {
+	display: inline-block;
+	margin-bottom: 14px;
+	padding: 5px 14px;
+	border-radius: 999px;
+	background: @mint;
+	font-family: @font-title;
+	font-size: 11.5px;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: @teal-dark;
+}
+
+.pkp_structure_main h2.pardalis_hero_title,
+.pardalis_hero_title {
+	margin: 0 0 10px;
+	font-family: @font-title;
+	font-size: 37.5px;
+	line-height: 1.18;
+	font-weight: 700;
+	color: @navy;
+}
+
+.pardalis_hero_issn {
+	margin: 0 0 14px;
+	font-size: 13.5px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	color: @muted;
+}
+
+.pardalis_hero_lead {
+	margin: 0 0 28px;
+	max-width: 560px;
+	font-size: 16px;
+	line-height: 1.65;
+	color: @text;
+}
+
+.pardalis_hero_actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+.pardalis_hero_visual {
+	position: relative;
+	flex: 0 0 270px;
+	text-align: center;
+}
+
+.pardalis_hero_visual:before {
+	content: "";
+	position: absolute;
+	top: -18px;
+	right: -22px;
+	width: 130px;
+	height: 130px;
+	background-image: ~"radial-gradient(rgba(29,79,216,.35) 2px, transparent 2.5px)";
+	background-size: 14px 14px;
+	z-index: 0;
+}
+
+.pardalis_cover {
+	position: relative;
+	z-index: 1;
+	display: block;
+	line-height: 0;
+}
+
+.pardalis_cover img {
+	display: inline-block;
+	max-width: 100%;
+	max-height: 340px;
+	width: auto;
+	height: auto;
+	border-radius: 12px;
+	box-shadow: 0 18px 40px rgba(15, 35, 82, 0.28);
+	border: 6px solid #ffffff;
+}
+
+// Portada genérica cuando el número no tiene imagen
+.pardalis_cover_placeholder {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 12px;
+	width: 230px;
+	height: 300px;
+	margin: 0 auto;
+	padding: 20px;
+	box-sizing: border-box;
+	border-radius: 12px;
+	background: linear-gradient(150deg, @blue 0%, @teal 100%);
+	box-shadow: 0 18px 40px rgba(15, 35, 82, 0.28);
+	color: #ffffff;
+	line-height: 1.3;
+}
+.pardalis_cover_placeholder .fa {
+	font-size: 54px;
+	opacity: 0.9;
+}
+.pardalis_cover_placeholder strong {
+	font-family: @font-title;
+	font-size: 20px;
+	text-align: center;
+}
+.pardalis_cover_placeholder small {
+	font-size: 13px;
+	opacity: 0.9;
+	text-align: center;
+}
+
+// ---------------------------------------------------------------
+// 7) Tarjetas de acceso (como "Laboratory Services")
+// ---------------------------------------------------------------
+.pardalis_cards {
+	display: grid;
+	grid-template-columns: ~"repeat(auto-fit, minmax(230px, 1fr))";
+	gap: 24px;
+}
+
+.pardalis_card {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 32px 28px;
+	background: #ffffff;
+	border-radius: @radius;
+	box-shadow: @shadow;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.pardalis_card:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 18px 40px rgba(15, 35, 82, 0.14);
+}
+
+.pardalis_card_icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 56px;
+	height: 56px;
+	margin-bottom: 18px;
+	border-radius: 14px;
+	background: @mint;
+	color: @teal-dark;
+	font-size: 26px;
+}
+
+.pkp_structure_main .pardalis_card h3,
+.pardalis_card h3 {
+	margin: 0 0 10px;
+	font-family: @font-title;
+	font-size: 17.5px;
+	line-height: 1.35;
+	font-weight: 600;
+	color: @navy;
+}
+
+.pardalis_card p {
+	flex: 1 1 auto;
+	margin: 0 0 22px;
+	font-size: 14.5px;
+	line-height: 1.6;
+	color: @muted;
+}
+
+// ---------------------------------------------------------------
+// 8) Sobre la revista
+// ---------------------------------------------------------------
+.pardalis_about {
+	display: flex;
+	align-items: center;
+	gap: 72px;
+}
+
+.pardalis_about_visual {
+	position: relative;
+	flex: 0 0 400px;
+}
+
+.pardalis_about_art {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 380px;
+	border-radius: 28px;
+	background: linear-gradient(135deg, @blue 0%, @teal 100%);
+	box-shadow: @shadow-lg;
+	color: rgba(255, 255, 255, 0.92);
+	font-size: 120px;
+	overflow: hidden;
+}
+.pardalis_about_art:before {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background-image: ~"radial-gradient(rgba(255,255,255,.22) 2px, transparent 2.5px)";
+	background-size: 22px 22px;
+}
+.pardalis_about_art .fa {
+	position: relative;
+}
+
+.pardalis_badge {
+	position: absolute;
+	right: -26px;
+	bottom: -26px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 140px;
+	height: 140px;
+	border-radius: 50%;
+	background: @blue;
+	border: 6px solid #ffffff;
+	box-shadow: 0 12px 30px rgba(29, 79, 216, 0.35);
+	color: #ffffff;
+	text-align: center;
+}
+.pardalis_badge strong {
+	font-family: @font-title;
+	font-size: 37px;
+	line-height: 1;
+	font-weight: 700;
+}
+.pardalis_badge span {
+	margin-top: 6px;
+	font-size: 11.5px;
+	line-height: 1.25;
+	opacity: 0.92;
+}
+
+.pardalis_about_text {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+.pardalis_about_desc {
+	margin-bottom: 22px;
+	font-size: 16px;
+	line-height: 1.75;
+	color: @text;
+}
+
+.pardalis_chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin: 0 0 28px;
+	padding: 0;
+	list-style: none;
+}
+.pardalis_chips li {
+	padding: 6px 16px;
+	border-radius: 999px;
+	background: @mint;
+	font-size: 13px;
+	font-weight: 600;
+	color: @navy;
+}
+
+// ---------------------------------------------------------------
+// 9) Barra de estadísticas (azul)
+// ---------------------------------------------------------------
+.pardalis_stats {
+	background: linear-gradient(110deg, @blue 0%, @blue-dark 100%);
+	color: #ffffff;
+}
+
+.pardalis_stats_inner {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 28px 40px;
+	padding-top: 40px;
+	padding-bottom: 40px;
+}
+
+.pardalis_stat {
+	flex: 1 1 200px;
+}
+.pardalis_stat strong {
+	display: block;
+	font-family: @font-title;
+	font-size: 38.5px;
+	line-height: 1.1;
+	font-weight: 800;
+	color: #ffffff;
+}
+.pardalis_stat span {
+	display: block;
+	margin-top: 4px;
+	font-size: 13.5px;
+	letter-spacing: 0.04em;
+	color: rgba(255, 255, 255, 0.85);
+}
+.pardalis_stat i {
+	position: relative;
+	display: block;
+	height: 4px;
+	margin-top: 14px;
+	border-radius: 4px;
+	background: rgba(255, 255, 255, 0.25);
+}
+.pardalis_stat i:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 70%;
+	border-radius: 4px;
+	background: @teal;
+}
+.pardalis_stat:nth-child(1) i:after { width: 90%; }
+.pardalis_stat:nth-child(2) i:after { width: 70%; }
+.pardalis_stat:nth-child(3) i:after { width: 80%; }
+
+// ---------------------------------------------------------------
+// 10) Artículos recientes
+// ---------------------------------------------------------------
+.pardalis_articles {
+	display: grid;
+	grid-template-columns: ~"repeat(auto-fit, minmax(290px, 1fr))";
+	gap: 28px;
+}
+
+.pardalis_article {
+	display: flex;
+	flex-direction: column;
+	background: #ffffff;
+	border-radius: @radius;
+	box-shadow: @shadow;
+	overflow: hidden;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.pardalis_article:hover {
+	transform: translateY(-4px);
+	box-shadow: 0 18px 40px rgba(15, 35, 82, 0.14);
+}
+
+.pardalis_article_img {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 190px;
+	background-color: @mint;
+	background-size: cover;
+	background-position: center top;
+	text-decoration: none;
+}
+.pardalis_article_img_empty {
+	background-image: linear-gradient(135deg, @blue 0%, @teal 100%);
+	color: rgba(255, 255, 255, 0.85);
+	font-size: 54px;
+}
+
+.pardalis_date {
+	position: absolute;
+	left: 18px;
+	bottom: -22px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	width: 54px;
+	height: 54px;
+	border-radius: 50%;
+	background: #ffffff;
+	box-shadow: 0 6px 16px rgba(15, 35, 82, 0.18);
+	font-family: @font-title;
+	font-size: 10px;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	line-height: 1.1;
+	color: @teal-dark;
+}
+.pardalis_date b {
+	font-size: 17.5px;
+	font-weight: 700;
+	color: @navy;
+}
+
+.pardalis_article_body {
+	display: flex;
+	flex: 1 1 auto;
+	flex-direction: column;
+	align-items: flex-start;
+	padding: 36px 24px 26px;
+}
+
+.pardalis_tag {
+	display: inline-block;
+	margin-bottom: 10px;
+	padding: 3px 12px;
+	border-radius: 999px;
+	background: @mint;
+	font-size: 11px;
+	font-weight: 600;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	color: @teal-dark;
+}
+
+.pkp_structure_main .pardalis_article h3,
+.pardalis_article h3 {
+	margin: 0 0 10px;
+	font-family: @font-title;
+	font-size: 16.5px;
+	line-height: 1.4;
+	font-weight: 600;
+}
+.pardalis_article h3 a {
+	color: @navy;
+	text-decoration: none;
+}
+.pardalis_article h3 a:hover {
+	color: @teal-dark;
+}
+
+.pardalis_article_authors {
+	flex: 1 1 auto;
+	margin: 0 0 18px;
+	font-size: 13.5px;
+	color: @muted;
+}
+.pardalis_article_authors .fa {
+	margin-right: 4px;
+	color: @teal;
+}
+
+// ---------------------------------------------------------------
+// 11) Contenido nativo de OJS dentro de la portada
+//     (anuncios, número actual, contenido adicional)
+// ---------------------------------------------------------------
+.pardalis_native {
+	padding-top: 72px;
+	padding-bottom: 40px;
+}
+
+.pardalis_native:empty {
+	display: none;
+}
+
+.pardalis_native h2 {
+	font-family: @font-title;
+	font-size: 24px;
+	color: @navy;
+	margin: 0 0 18px;
+}
+
+.pardalis_native .current_issue,
+.pardalis_native .cmp_announcements {
+	margin-bottom: 40px;
+}
+
+.pardalis_native .current_issue_title {
+	margin-bottom: 18px;
+	font-family: @font-title;
+	font-size: 17.5px;
+	font-weight: 600;
+	color: @teal-dark;
+}
+
+.pardalis_native .read_more {
+	display: inline-block;
+	margin-top: 10px;
+	padding: 10px 24px;
+	border-radius: 999px;
+	background: @mint;
+	font-weight: 600;
+	color: @navy;
+	text-decoration: none;
+}
+.pardalis_native .read_more:hover {
+	background: @teal;
+	color: #ffffff;
+}
+
+// ---------------------------------------------------------------
+// 12) Llamado a enviar (banda azul-turquesa)
+// ---------------------------------------------------------------
+.pardalis_cta {
+	margin-top: 24px;
+	background: linear-gradient(110deg, @blue 0%, @teal 100%);
+	color: #ffffff;
+}
+
+.pardalis_cta_inner {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	gap: 24px 40px;
+	padding-top: 56px;
+	padding-bottom: 56px;
+}
+
+.pkp_structure_main .pardalis_cta h2,
+.pardalis_cta h2 {
+	margin: 0 0 8px;
+	font-family: @font-title;
+	font-size: 27px;
+	line-height: 1.25;
+	color: #ffffff;
+}
+.pardalis_cta p {
+	margin: 0;
+	max-width: 620px;
+	color: rgba(255, 255, 255, 0.92);
+}
+
+.pardalis_cta_actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px;
+}
+
+// ---------------------------------------------------------------
+// 13) Páginas interiores (artículos, números, acerca de, etc.)
+// ---------------------------------------------------------------
+body:not(.pardalis_home) {
+	background: @bg-soft;
+}
+
+body:not(.pardalis_home) .pkp_structure_content {
+	background: transparent;
+}
+
+.obj_issue_summary,
+.obj_article_summary,
+.pkp_block,
+.cmp_block {
+	background: #ffffff;
+	border: 1px solid rgba(15, 35, 82, 0.06);
+	border-radius: @radius;
+	box-shadow: @shadow;
+	padding: 20px;
+	margin-bottom: 20px;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.obj_article_summary:hover,
+.obj_issue_summary:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 14px 30px rgba(15, 35, 82, 0.13);
+}
+
+.obj_article_summary .title,
+.obj_issue_summary .title,
+.obj_issue_summary .current_issue_title {
+	font-family: @font-title;
+	font-weight: 600;
+}
+.obj_article_summary .title a,
+.obj_issue_summary .title a {
+	color: @navy;
+}
+.obj_article_summary .title a:hover,
+.obj_issue_summary .title a:hover {
+	color: @teal-dark;
+}
+
+.pkp_block .title,
+.cmp_block .title {
+	font-family: @font-title;
+	color: @navy;
+	border-bottom: 2px solid @teal;
+	padding-bottom: 6px;
+}
+
+// Etiquetas de sección
+.obj_article_summary .section,
+.item .section,
+.meta .section,
+.published .label {
+	display: inline-block;
+	background: @mint;
+	color: @teal-dark;
+	font-weight: 600;
+	font-size: 12px;
+	padding: 3px 12px;
+	border-radius: 999px;
+	text-transform: uppercase;
+	letter-spacing: 0.04em;
+}
+
+// Botones de galeradas (PDF, HTML...)
+.galleys_links a,
+.cmp_article_galleys a,
+a.obj_galley_link {
+	display: inline-block;
+	padding: 6px 18px;
+	border: 1.5px solid @teal;
+	border-radius: 999px;
+	background: transparent;
+	color: @teal-dark;
+	font-weight: 600;
+	text-decoration: none;
+	transition: background-color 0.15s ease, color 0.15s ease;
+}
+.galleys_links a:hover,
+.cmp_article_galleys a:hover,
+a.obj_galley_link:hover {
+	background: @teal;
+	color: #ffffff;
+}
+
+// Migas de pan
+.cmp_breadcrumbs {
+	font-size: 13.5px;
+}
+
+// ---------------------------------------------------------------
+// 13b) Búsqueda y formularios de páginas interiores
+// ---------------------------------------------------------------
+.cmp_breadcrumbs {
+	margin-bottom: 18px;
+}
+.cmp_breadcrumbs ol {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px 6px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.cmp_breadcrumbs li {
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+	color: @muted;
+}
+.cmp_breadcrumbs a {
+	color: @blue;
+	text-decoration: none;
+}
+.cmp_breadcrumbs a:hover {
+	color: @teal-dark;
+	text-decoration: underline;
+}
+.cmp_breadcrumbs .separator {
+	color: @line;
+}
+
+.cmp_form input[type="text"],
+.cmp_form input[type="email"],
+.cmp_form input[type="password"],
+.cmp_form input[type="search"],
+.cmp_form select,
+.cmp_form textarea {
+	border: 1px solid @line;
+	border-radius: 10px;
+	padding: 9px 12px;
+	font-family: @font-text;
+	color: @navy;
+	background: #ffffff;
+}
+.cmp_form input[type="text"]:focus,
+.cmp_form input[type="email"]:focus,
+.cmp_form input[type="password"]:focus,
+.cmp_form input[type="search"]:focus,
+.cmp_form select:focus,
+.cmp_form textarea:focus {
+	outline: none;
+	border-color: @teal;
+	box-shadow: 0 0 0 3px fade(@teal, 20%);
+}
+
+// ---- Encabezado de la búsqueda ----
+.pardalis_search_hero {
+	position: relative;
+	margin: 0 0 32px;
+	padding: 44px 36px 36px;
+	border-radius: 24px;
+	background: linear-gradient(120deg, @blue-dark 0%, @blue 55%, @teal 140%);
+	box-shadow: @shadow-lg;
+	text-align: center;
+	color: #ffffff;
+	overflow: hidden;
+}
+.pardalis_search_hero:before {
+	content: "";
+	position: absolute;
+	top: -30px;
+	right: -30px;
+	width: 220px;
+	height: 220px;
+	background-image: ~"radial-gradient(rgba(255,255,255,.28) 2px, transparent 2.5px)";
+	background-size: 18px 18px;
+}
+.pardalis_search_hero > * {
+	position: relative;
+}
+.pkp_structure_main .pardalis_search_hero h1,
+.pardalis_search_hero h1 {
+	margin: 0 0 8px;
+	font-family: @font-title;
+	font-size: 32px;
+	line-height: 1.2;
+	font-weight: 700;
+	color: #ffffff;
+}
+.pardalis_search_hero .pardalis_label {
+	color: #c4f4ef;
+}
+.pardalis_search_sub {
+	margin: 0;
+	font-size: 15px;
+	color: rgba(255, 255, 255, 0.9);
+}
+
+.pardalis_search .pardalis_search_bar {
+	display: flex;
+	align-items: center;
+	max-width: 720px;
+	margin: 24px auto 0;
+	padding: 6px 6px 6px 22px;
+	border-radius: 999px;
+	background: #ffffff;
+	box-shadow: 0 14px 34px rgba(5, 20, 60, 0.28);
+}
+.pardalis_search .pardalis_search_bar .fa {
+	flex: 0 0 auto;
+	margin-right: 12px;
+	font-size: 18px;
+	color: @teal;
+}
+.pardalis_search .pardalis_search_bar input.query {
+	flex: 1 1 auto;
+	width: auto;
+	min-width: 0;
+	height: auto;
+	padding: 12px 6px;
+	border: 0;
+	border-radius: 0;
+	background: transparent;
+	box-shadow: none;
+	font-size: 16px;
+	color: @navy;
+}
+.pardalis_search .pardalis_search_bar input.query:focus {
+	outline: none;
+	box-shadow: none;
+}
+.pardalis_search .pardalis_search_bar button.submit {
+	flex: 0 0 auto;
+	margin: 0;
+	padding: 13px 30px;
+	border: 0;
+	border-radius: 999px;
+	background: @teal;
+	font-family: @font-title;
+	font-size: 15px;
+	font-weight: 600;
+	color: #ffffff;
+	cursor: pointer;
+	transition: background-color 0.15s ease;
+}
+.pardalis_search .pardalis_search_bar button.submit:hover,
+.pardalis_search .pardalis_search_bar button.submit:focus {
+	background: @teal-dark;
+}
+
+// ---- Filtros avanzados plegables ----
+.pardalis_search .pardalis_filters {
+	max-width: 720px;
+	margin: 16px auto 0;
+	border: 1px solid rgba(255, 255, 255, 0.3);
+	border-radius: 16px;
+	background: rgba(255, 255, 255, 0.12);
+	text-align: left;
+	color: #ffffff;
+}
+.pardalis_filters summary {
+	padding: 12px 20px;
+	font-family: @font-title;
+	font-size: 14px;
+	font-weight: 600;
+	cursor: pointer;
+	list-style: none;
+}
+.pardalis_filters summary::-webkit-details-marker {
+	display: none;
+}
+.pardalis_filters summary .fa {
+	margin-right: 8px;
+}
+.pardalis_filters[open] summary {
+	border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+}
+.pardalis_filters fieldset.search_advanced {
+	display: block;
+	margin: 0;
+	padding: 18px 20px 20px;
+	border: 0;
+}
+.pardalis_filters .date_range {
+	display: grid;
+	grid-template-columns: ~"repeat(auto-fit, minmax(270px, 1fr))";
+	gap: 16px;
+	margin-bottom: 16px;
+}
+.pardalis_filters fieldset fieldset,
+.pardalis_filters .from fieldset,
+.pardalis_filters .to fieldset {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+.pardalis_filters legend,
+.pardalis_filters label {
+	padding: 0;
+	font-size: 13px;
+	font-weight: 600;
+	color: #ffffff;
+}
+.pardalis_filters .from legend,
+.pardalis_filters .to legend {
+	margin-bottom: 6px;
+	font-size: 14px;
+}
+.pardalis_filters select {
+	display: inline-block;
+	width: auto;
+	margin: 0 12px 4px 4px;
+	padding: 8px 10px;
+	border: 0;
+	border-radius: 8px;
+	background: #ffffff;
+	font-size: 14px;
+	color: @navy;
+}
+.pardalis_filters .author label {
+	display: block;
+	margin-bottom: 6px;
+	font-size: 14px;
+}
+.pardalis_filters .author input {
+	width: 100%;
+	padding: 10px 14px;
+	border: 0;
+	border-radius: 10px;
+	background: #ffffff;
+	font-size: 15px;
+	color: @navy;
+}
+
+// ---- Resultados ----
+.pardalis_search_count {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	gap: 8px;
+	margin: 0 0 20px;
+	font-family: @font-title;
+	font-size: 16px;
+	font-weight: 600;
+	color: @navy;
+}
+.pardalis_search_count .fa {
+	color: @teal;
+}
+.pardalis_search_count em {
+	font-style: normal;
+	color: @teal-dark;
+}
+
+.pardalis_results {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.pardalis_results > li {
+	margin: 0 0 4px;
+	padding: 0;
+	border: 0;
+}
+
+.pardalis_empty {
+	padding: 48px 24px;
+	border-radius: @radius;
+	background: #ffffff;
+	box-shadow: @shadow;
+	text-align: center;
+}
+.pardalis_empty_icon {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	width: 72px;
+	height: 72px;
+	margin-bottom: 16px;
+	border-radius: 50%;
+	background: @mint;
+	font-size: 28px;
+	color: @teal-dark;
+}
+.pkp_structure_main .pardalis_empty h3,
+.pardalis_empty h3 {
+	margin: 0 0 8px;
+	font-family: @font-title;
+	font-size: 22px;
+	color: @navy;
+}
+.pardalis_empty p {
+	margin: 0 0 12px;
+	color: @muted;
+}
+.pardalis_empty ul {
+	display: inline-block;
+	margin: 0 0 24px;
+	padding: 0 0 0 20px;
+	text-align: left;
+	color: @text;
+}
+
+// ---- Pantalla inicial: consejos ----
+.pardalis_tips {
+	display: grid;
+	grid-template-columns: ~"repeat(auto-fit, minmax(220px, 1fr))";
+	gap: 20px;
+	margin-bottom: 24px;
+}
+.pardalis_tip {
+	padding: 28px 24px;
+	border-radius: @radius;
+	background: #ffffff;
+	box-shadow: @shadow;
+}
+.pkp_structure_main .pardalis_tip h3,
+.pardalis_tip h3 {
+	margin: 0 0 8px;
+	font-family: @font-title;
+	font-size: 17px;
+	font-weight: 600;
+	color: @navy;
+}
+.pardalis_tip p {
+	margin: 0;
+	font-size: 14px;
+	line-height: 1.6;
+	color: @muted;
+}
+.pardalis_tip code {
+	padding: 2px 8px;
+	border-radius: 6px;
+	background: @mint;
+	font-size: 13px;
+	color: @navy;
+}
+.pardalis_search_browse {
+	text-align: center;
+	color: @muted;
+}
+.pardalis_search_browse a {
+	font-weight: 600;
+}
+
+// ---------------------------------------------------------------
+// 14) Pie de página
+// ---------------------------------------------------------------
+.pkp_structure_footer_wrapper {
+	margin-top: 0;
+	background: @navy-deep;
+	color: rgba(255, 255, 255, 0.85);
+}
+
+.pkp_structure_footer {
+	text-align: left;
+}
+
+.pardalis_footer_cols {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 36px 56px;
+	padding: 56px 0 28px;
+}
+
+.pardalis_footer_col {
+	flex: 1 1 200px;
+}
+.pardalis_footer_about {
+	flex: 2 1 280px;
+}
+
+.pardalis_footer_title {
+	margin-bottom: 14px;
+	font-family: @font-title;
+	font-size: 17px;
+	font-weight: 600;
+	color: #ffffff;
+}
+
+.pardalis_footer_col ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.pardalis_footer_col li {
+	margin-bottom: 8px;
+}
+.pardalis_footer_col p {
+	margin: 0 0 8px;
+	font-size: 14.5px;
+	color: rgba(255, 255, 255, 0.78);
+}
+.pardalis_footer_col a {
+	color: rgba(255, 255, 255, 0.82);
+	text-decoration: none;
+}
+.pardalis_footer_col a:hover {
+	color: @teal;
+}
+
+.pkp_footer_content {
+	padding: 20px 0;
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	font-size: 14.5px;
+	color: rgba(255, 255, 255, 0.78);
+}
+.pkp_footer_content p,
+.pkp_footer_content h1,
+.pkp_footer_content h2,
+.pkp_footer_content h3 {
+	color: rgba(255, 255, 255, 0.85);
+}
+.pkp_footer_content a {
+	color: rgba(255, 255, 255, 0.9);
+}
+.pkp_footer_content a:hover {
+	color: @teal;
+}
+
+.pkp_brand_footer {
+	padding: 20px 0 32px;
+	border-top: 1px solid rgba(255, 255, 255, 0.12);
+	text-align: right;
+}
+.pkp_brand_footer img {
+	max-height: 56px;
+	opacity: 0.85;
+}
+
+// ---------------------------------------------------------------
+// 15) Responsivo
+// ---------------------------------------------------------------
+@media (max-width: 991px) {
+
+	.pkp_site_name .is_text {
+		font-size: 16px;
+	}
+
+	.pardalis_logo_icon {
+		width: 28px;
+		height: 28px;
+		font-size: 13px;
+	}
+
+	.pardalis_search_label {
+		margin-left: 6px;
+	}
+
+	.pardalis_hero {
+		padding: 36px 0 48px;
+	}
+
+	.pardalis_hero_card {
+		flex-direction: column-reverse;
+		gap: 28px;
+		padding: 32px 26px;
+		text-align: center;
+	}
+
+	.pardalis_hero_lead {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	.pardalis_hero_actions {
+		justify-content: center;
+	}
+
+	.pardalis_hero_visual {
+		flex: 0 0 auto;
+	}
+
+	.pkp_structure_main h2.pardalis_hero_title,
+	.pardalis_hero_title {
+		font-size: 28px;
+	}
+
+	.pardalis_hero_bg:before {
+		width: 100%;
+		clip-path: ~"polygon(0 0, 100% 0, 100% 55%, 0 100%)";
+	}
+
+	.pardalis_section {
+		padding: 56px 0;
+	}
+
+	.pkp_structure_main h2.pardalis_section_title,
+	.pardalis_section_title {
+		font-size: 25px;
+	}
+
+	.pardalis_about {
+		flex-direction: column;
+		gap: 56px;
+	}
+
+	.pardalis_about_visual {
+		flex: 0 0 auto;
+		width: 100%;
+		max-width: 400px;
+	}
+
+	.pardalis_about_art {
+		height: 280px;
+		font-size: 88px;
+	}
+
+	.pardalis_badge {
+		right: -8px;
+		bottom: -30px;
+	}
+
+	.pardalis_stats_inner {
+		flex-direction: column;
+	}
+
+	.pardalis_cta_inner {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	.pkp_brand_footer {
+		text-align: left;
+	}
+}
+
+@media (max-width: 480px) {
+	.pardalis_container {
+		padding: 0 16px;
+	}
+
+	.pardalis_search_hero {
+		padding: 32px 18px 26px;
+		border-radius: 18px;
+	}
+
+	.pardalis_search .pardalis_search_bar {
+		padding-left: 16px;
+	}
+
+	.pardalis_search .pardalis_search_bar button.submit {
+		padding: 12px 18px;
+	}
+
+	.pardalis_hero_actions .pardalis_btn {
+		width: 100%;
+	}
+}

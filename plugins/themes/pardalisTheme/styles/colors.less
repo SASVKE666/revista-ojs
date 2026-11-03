@@ -1,0 +1,20 @@
+// styles/colors.less
+//
+// Sobrescribe las variables LESS que el tema Default de OJS ya define
+// internamente. Este archivo se compila DESPUÉS de las variables del
+// tema padre (se agrega vía modifyStyle -> addLess), así que estos
+// valores tienen prioridad.
+//
+// @bg-base es el color de fondo del encabezado y la barra de
+// navegación principal en el tema Default.
+
+// Azul marino profundo (base "Laborex")
+@bg-base: #0B3B5C;
+
+// Texto sobre el color base (el header es oscuro -> texto claro)
+@text-bg-base: rgba(255, 255, 255, 0.92);
+@bg-base-border-color: rgba(255, 255, 255, 0.15);
+
+// Tipografías: Poppins para títulos, Inter para texto normal
+@font: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+@font-heading: 'Poppins', 'Inter', sans-serif;

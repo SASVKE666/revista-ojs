@@ -1,0 +1,17 @@
+/*
+ * styleSheet.css — Hoja de estilo de la revista (Ajustes > Sitio web > Apariencia > Avanzado)
+ *
+ * Esta hoja se carga DESPUÉS del tema PARDALIS, así que cualquier regla que escribas
+ * aquí gana sobre el tema. Por eso se deja vacía: el diseño ya vive en el tema
+ * (plugins/themes/pardalisTheme/styles/custom.less).
+ *
+ * Si necesitas un ajuste puntual, descomenta y edita un ejemplo:
+ */
+
+/* Ejemplo: cambiar el color del botón principal
+a.pardalis_btn_primary { background: #1fb5a7; }
+*/
+
+/* Ejemplo: ocultar el correo de la franja superior
+.pardalis_topinfo_item { display: none; }
+*/

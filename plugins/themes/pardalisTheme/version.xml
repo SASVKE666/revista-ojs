@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE version SYSTEM "../../../lib/pkp/dtd/pluginVersion.dtd">
+<!--
+  plugins/themes/pardalisTheme/version.xml
+
+  Información de versión del tema PARDALIS.
+-->
+<version>
+	<!-- Debe coincidir con el nombre de la carpeta del tema -->
+	<application>pardalisTheme</application>
+	<!-- Siempre "plugins.themes" para un tema -->
+	<type>plugins.themes</type>
+	<!-- Versión del tema: siempre 4 números -->
+	<release>1.0.0.0</release>
+	<date>2026-09-24</date>
+	<!-- Siempre 1 -->
+	<lazy-load>1</lazy-load>
+	<!-- Debe coincidir con la clase definida en index.php -->
+	<class>PardalisThemePlugin</class>
+</version>

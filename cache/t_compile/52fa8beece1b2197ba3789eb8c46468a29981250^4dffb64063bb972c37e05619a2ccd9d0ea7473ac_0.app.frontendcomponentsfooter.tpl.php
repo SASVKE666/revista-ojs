@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.3.1, created on 2026-11-03 04:39:34
+/* Smarty version 4.3.1, created on 2026-11-04 04:42:32
   from 'app:frontendcomponentsfooter.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.3.1',
-  'unifunc' => 'content_6ae96586be50b3_64774269',
+  'unifunc' => 'content_6aeab7b889e877_16843804',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     '4dffb64063bb972c37e05619a2ccd9d0ea7473ac' => 
     array (
       0 => 'app:frontendcomponentsfooter.tpl',
-      1 => 1793679423,
+      1 => 1793767288,
       2 => 'app',
     ),
   ),
@@ -20,7 +20,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   array (
   ),
 ),false)) {
-function content_6ae96586be50b3_64774269 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6aeab7b889e877_16843804 (Smarty_Internal_Template $_smarty_tpl) {
 if (!($_smarty_tpl->tpl_vars['currentContext']->value && (!$_smarty_tpl->tpl_vars['requestedPage']->value || $_smarty_tpl->tpl_vars['requestedPage']->value === 'index') && (!$_smarty_tpl->tpl_vars['requestedOp']->value || $_smarty_tpl->tpl_vars['requestedOp']->value === 'index'))) {?>
 
 	</div><!-- pkp_structure_main -->

@@ -1888,6 +1888,287 @@ a.obj_galley_link:hover {
 }
 
 // ---------------------------------------------------------------
+// 13c) Layout de páginas interiores y ficha del artículo
+//      Autosuficiente: define anchos y columnas por sí mismo, no depende
+//      del CSS base del tema Default.
+// ---------------------------------------------------------------
+body:not(.pardalis_home) .pkp_structure_content {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: @container;
+	margin: 0 auto;
+	padding: 32px 24px 64px;
+}
+body:not(.pardalis_home) .pkp_structure_content.has_sidebar {
+	display: grid;
+	grid-template-columns: ~"minmax(0, 1fr) 300px";
+	gap: 32px;
+	align-items: start;
+}
+body:not(.pardalis_home) .pkp_structure_main {
+	float: none;
+	width: auto;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+body:not(.pardalis_home) .pkp_structure_main:before,
+body:not(.pardalis_home) .pkp_structure_main:after {
+	display: none;
+}
+body:not(.pardalis_home) .pkp_structure_sidebar {
+	float: none;
+	width: auto;
+	margin: 0;
+	padding: 0;
+	grid-column: 2;
+	grid-row: 1;
+}
+
+// ---- Ficha del artículo ----
+.obj_article_details {
+	display: block;
+}
+
+.obj_article_details > .page_title {
+	margin: 0 0 8px;
+	font-family: @font-title;
+	font-size: 32px;
+	line-height: 1.25;
+	font-weight: 700;
+	color: @navy;
+}
+
+.obj_article_details > .subtitle {
+	margin: 0 0 8px;
+	font-family: @font-text;
+	font-size: 18px;
+	font-weight: 500;
+	color: @muted;
+}
+
+.obj_article_details .row {
+	display: grid;
+	grid-template-columns: ~"minmax(0, 1fr) 300px";
+	gap: 32px;
+	align-items: start;
+	margin: 24px 0 0;
+}
+
+// Columna principal
+.obj_article_details .main_entry {
+	min-width: 0;
+	padding: 34px 38px;
+	border-radius: @radius;
+	background: #ffffff;
+	box-shadow: @shadow;
+}
+.obj_article_details .main_entry .item {
+	margin: 0 0 30px;
+	padding: 0;
+}
+.obj_article_details .main_entry .item:last-child {
+	margin-bottom: 0;
+}
+
+.obj_article_details h2.label,
+.obj_article_details h3.label,
+.obj_article_details .label {
+	margin: 0 0 10px;
+	font-family: @font-title;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: @teal-dark;
+}
+
+.obj_article_details .item.authors ul.authors {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 14px 36px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.obj_article_details .item.authors li {
+	margin: 0;
+	padding: 0;
+}
+.obj_article_details .item.authors .name {
+	display: block;
+	font-family: @font-title;
+	font-size: 16px;
+	font-weight: 600;
+	color: @navy;
+}
+.obj_article_details .item.authors .affiliation {
+	display: block;
+	margin-top: 2px;
+	font-size: 13px;
+	color: @muted;
+}
+.obj_article_details .item.authors .orcid {
+	display: block;
+	font-size: 12px;
+}
+
+.obj_article_details .item.keywords .value,
+.obj_article_details .item.doi .value {
+	display: block;
+	font-size: 15px;
+	color: @text;
+}
+
+.obj_article_details .item.abstract p,
+.obj_article_details .item.references .value,
+.obj_article_details .item.author_bios .value {
+	font-size: 16px;
+	line-height: 1.8;
+	color: @text;
+}
+.obj_article_details .item.abstract p {
+	margin: 0 0 12px;
+}
+
+// Columna lateral: una sola tarjeta
+.obj_article_details .entry_details {
+	position: sticky;
+	top: 16px;
+	padding: 6px 22px 8px;
+	border-radius: @radius;
+	background: #ffffff;
+	box-shadow: @shadow;
+}
+.obj_article_details .entry_details .item {
+	margin: 0;
+	padding: 18px 0;
+	border-top: 1px solid #edf2f7;
+}
+.obj_article_details .entry_details .item:first-child {
+	border-top: 0;
+}
+
+// Portada: tamaño controlado
+.obj_article_details .item.cover_image {
+	text-align: center;
+}
+.obj_article_details .item.cover_image .sub_item {
+	margin: 0;
+}
+.obj_article_details .item.cover_image a {
+	display: inline-block;
+	line-height: 0;
+}
+.obj_article_details .item.cover_image img {
+	display: block;
+	width: auto;
+	max-width: 100%;
+	height: auto;
+	max-height: 280px;
+	margin: 0 auto;
+	border-radius: 10px;
+	box-shadow: 0 10px 24px rgba(15, 35, 82, 0.22);
+}
+
+// Botones de descarga (PDF, HTML…): anchos y visibles
+.obj_article_details .entry_details ul.galleys_links,
+.obj_article_details .entry_details ul.supplementary_galleys_links {
+	display: grid;
+	gap: 10px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+.obj_article_details .entry_details .galleys_links li,
+.obj_article_details .entry_details .supplementary_galleys_links li {
+	margin: 0;
+	padding: 0;
+}
+.obj_article_details .entry_details .galleys_links a.obj_galley_link,
+.obj_article_details .entry_details .supplementary_galleys_links a.obj_galley_link {
+	display: block;
+	width: 100%;
+	padding: 12px 18px;
+	border: 0;
+	border-radius: 999px;
+	background: @teal;
+	font-family: @font-title;
+	font-size: 15px;
+	font-weight: 600;
+	text-align: center;
+	color: #ffffff;
+	box-shadow: 0 8px 18px fade(@teal, 30%);
+}
+.obj_article_details .entry_details .galleys_links a.obj_galley_link:hover,
+.obj_article_details .entry_details .galleys_links a.obj_galley_link:focus,
+.obj_article_details .entry_details .supplementary_galleys_links a.obj_galley_link:hover {
+	background: @teal-dark;
+	color: #ffffff;
+}
+
+// Datos: fecha, número, sección
+.obj_article_details .entry_details .published .label {
+	display: block;
+	padding: 0;
+	border-radius: 0;
+	background: transparent;
+	font-size: 12px;
+	letter-spacing: 0.12em;
+	color: @teal-dark;
+}
+.obj_article_details .entry_details .sub_item {
+	margin: 0 0 14px;
+}
+.obj_article_details .entry_details .sub_item:last-child {
+	margin-bottom: 0;
+}
+.obj_article_details .entry_details .value,
+.obj_article_details .entry_details .value a {
+	font-size: 14px;
+	line-height: 1.5;
+	color: @text;
+}
+.obj_article_details .entry_details .value a.title,
+.obj_article_details .entry_details .value a {
+	color: @blue;
+}
+.obj_article_details .entry_details .versions ul {
+	margin: 0;
+	padding-left: 18px;
+}
+
+// Cómo citar
+.obj_article_details .citation_formats_list[aria-hidden="true"] {
+	display: none;
+}
+.obj_article_details .citation_formats_button {
+	padding: 8px 16px;
+	border: 1.5px solid @line;
+	border-radius: 999px;
+	background: #ffffff;
+	font-size: 13px;
+	font-weight: 600;
+	color: @navy;
+	cursor: pointer;
+}
+.obj_article_details .citation_formats_button:hover {
+	border-color: @teal;
+	color: @teal-dark;
+}
+.obj_article_details .citation_formats_styles {
+	margin: 8px 0 0;
+	padding: 0;
+	list-style: none;
+}
+.obj_article_details .citation_formats_styles a {
+	display: block;
+	padding: 6px 0;
+	font-size: 14px;
+}
+
+// ---------------------------------------------------------------
 // 14) Pie de página
 // ---------------------------------------------------------------
 .pkp_structure_footer_wrapper {
@@ -1897,6 +2178,11 @@ a.obj_galley_link:hover {
 }
 
 .pkp_structure_footer {
+	box-sizing: border-box;
+	width: 100%;
+	max-width: @container;
+	margin: 0 auto;
+	padding: 0 24px;
 	text-align: left;
 }
 
@@ -2057,6 +2343,30 @@ a.obj_galley_link:hover {
 
 	.pardalis_stats_inner {
 		flex-direction: column;
+	}
+
+	body:not(.pardalis_home) .pkp_structure_content {
+		padding: 24px 16px 48px;
+	}
+	body:not(.pardalis_home) .pkp_structure_content.has_sidebar {
+		display: block;
+	}
+	body:not(.pardalis_home) .pkp_structure_sidebar {
+		margin-top: 24px;
+	}
+
+	.obj_article_details > .page_title {
+		font-size: 26px;
+	}
+	.obj_article_details .row {
+		grid-template-columns: ~"minmax(0, 1fr)";
+		gap: 24px;
+	}
+	.obj_article_details .main_entry {
+		padding: 24px 20px;
+	}
+	.obj_article_details .entry_details {
+		position: static;
 	}
 
 	.pardalis_cta_inner {

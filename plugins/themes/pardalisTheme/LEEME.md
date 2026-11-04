@@ -15,6 +15,7 @@ basta con activar "Default".
 | `templates/frontend/components/header.tpl` | Franja superior (logo, correo, afiliación, botón de envío) + barra de menú |
 | `templates/frontend/components/footer.tpl` | Pie oscuro con enlaces e ISSN |
 | `templates/frontend/pages/indexJournal.tpl` | Portada: hero, tarjetas, sobre la revista, estadísticas, artículos recientes, número actual, llamado a enviar |
+| (en `custom.less`, secciones 13c) | Layout de páginas interiores y ficha del artículo (dos columnas, portada acotada, botón de descarga) |
 | `templates/frontend/pages/search.tpl` | Búsqueda: barra grande, filtros plegables, contador, consejos y estado vacío |
 | (en `custom.less`, sección 3b) | La navegación (menú, submenús, hamburguesa, enlaces de salto) no depende del CSS base del Default: se ve bien aunque ese CSS no cargue |
 | `styles/colors.less` | Sin uso (de una versión anterior); se puede borrar |
@@ -45,3 +46,14 @@ basta con activar "Default".
 - La portada ocupa todo el ancho y no muestra barra lateral; las páginas interiores conservan su estructura.
 - Si algo falla, desactiva el tema (activa Default) y revisa el `error_log` de PHP: los datos dinámicos están protegidos con `try/catch`.
 - Fuentes (Poppins, Inter) desde Google Fonts; sin internet se usa una sans-serif genérica.
+
+## Si algo se ve raro: cómo comprobar qué versión se cargó
+
+1. Abre cualquier página de la revista y pulsa **Ctrl+U** (código fuente). Busca `PardalisTheme`: aparece algo como
+   `<!-- PardalisTheme v1.3 · tema padre: cargado -->`.
+   - Si no aparece, sigues con una versión anterior de la carpeta del tema (copia de nuevo `pardalisTheme`).
+   - Si dice `tema padre: NO CARGADO`, el tema Default no se pudo cargar: sin él no hay estilos base, íconos ni menús.
+     Habilítalo en **Ajustes del sitio → Extensiones → Temas** (Default) y recarga.
+2. Los menús (principal y de usuario) los declara el tema Default. Si el padre está cargado pero la barra sigue vacía,
+   revisa **Ajustes → Sitio web → Apariencia → Menús**: cada menú debe estar asignado a su área (Principal / Usuario).
+3. El nombre del CSS del tema incluye una huella de sus archivos, así que ya no depende de vaciar la caché.

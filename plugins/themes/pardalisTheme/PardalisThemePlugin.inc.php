@@ -36,7 +36,16 @@ class PardalisThemePlugin extends ThemePlugin {
 		AppLocale::requireComponents(LOCALE_COMPONENT_APP_AUTHOR);
 
 		// 1) Heredamos del tema Default de OJS.
+		//    Si el tema Default está deshabilitado en esta revista, OJS no lo carga y este
+		//    tema se quedaría sin estilos base, sin íconos y sin menús (los menús "primary"
+		//    y "user" los declara el Default). En ese caso se carga a mano.
+		if (!PluginRegistry::getPlugin('themes', 'defaultthemeplugin')) {
+			PluginRegistry::loadPlugin('themes', 'default');
+		}
 		$this->setParent('defaultthemeplugin');
+		if (!isset($this->parent)) {
+			error_log('PardalisTheme: no se pudo cargar el tema padre "default"; la página se verá sin estilos base ni menús.');
+		}
 
 		// 2) Tipografías: Poppins (títulos) e Inter (texto).
 		$this->addStyle(
@@ -46,7 +55,9 @@ class PardalisThemePlugin extends ThemePlugin {
 		);
 
 		// 3) Hoja de estilos propia (hoja independiente: nunca rompe el tema padre).
-		$this->addStyle('pardalisCustom', 'styles/custom.less');
+		//    El nombre incluye una huella de los archivos del tema: OJS cachea el CSS por nombre,
+		//    así que cuando el tema cambia el nombre cambia y nunca se sirve un CSS viejo.
+		$this->addStyle('pardalisCustom' . substr($this->_getThemeStamp(), 0, 8), 'styles/custom.less');
 
 		// 4) Datos dinámicos para la portada (estadísticas y artículos recientes).
 		HookRegistry::register('TemplateManager::display', array($this, 'loadHomeData'));
@@ -57,18 +68,22 @@ class PardalisThemePlugin extends ThemePlugin {
 	 * (o la primera vez que se activa). Guarda una huella en cache/pardalis-theme.stamp.
 	 * Es seguro: ante cualquier error solo lo registra y la página sigue.
 	 */
+	private function _getThemeStamp() {
+		$files = glob($this->_getBaseDir('styles') . DIRECTORY_SEPARATOR . '*.less');
+		if (!is_array($files)) $files = array();
+		$files[] = $this->_getBaseDir('version.xml');
+		$files[] = __FILE__;
+
+		$stamp = '';
+		foreach ($files as $file) {
+			if (is_file($file)) $stamp .= basename($file) . filemtime($file) . filesize($file);
+		}
+		return md5($stamp);
+	}
+
 	private function _refreshCachesIfThemeChanged() {
 		try {
-			$files = glob($this->_getBaseDir('styles') . DIRECTORY_SEPARATOR . '*.less');
-			if (!is_array($files)) $files = array();
-			$files[] = $this->_getBaseDir('version.xml');
-			$files[] = __FILE__;
-
-			$stamp = '';
-			foreach ($files as $file) {
-				if (is_file($file)) $stamp .= $file . filemtime($file) . filesize($file);
-			}
-			$stamp = md5($stamp);
+			$stamp = $this->_getThemeStamp();
 
 			$stampFile = CacheManager::getFileCachePath() . DIRECTORY_SEPARATOR . 'pardalis-theme.stamp';
 			if (is_readable($stampFile) && trim((string) file_get_contents($stampFile)) === $stamp) return;
@@ -95,6 +110,10 @@ class PardalisThemePlugin extends ThemePlugin {
 	public function loadHomeData($hookName, $args) {
 		$templateMgr = $args[0];
 		$template = $args[1];
+
+		// Diagnóstico: se imprime como comentario HTML en el encabezado (Ctrl+U y buscar "PardalisTheme").
+		$templateMgr->assign('pardalisDiag', 'v1.3 · tema padre: ' . (isset($this->parent) ? 'cargado' : 'NO CARGADO'));
+
 		if ($template !== 'frontend/pages/indexJournal.tpl') return false;
 
 		$request = Application::get()->getRequest();

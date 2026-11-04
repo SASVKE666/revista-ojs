@@ -19,6 +19,7 @@
 {/strip}
 <!DOCTYPE html>
 <html lang="{$currentLocale|replace:"_":"-"}" xml:lang="{$currentLocale|replace:"_":"-"}">
+<!-- PardalisTheme {$pardalisDiag|default:"v1.3"|escape} -->
 {if !$pageTitleTranslated}{capture assign="pageTitleTranslated"}{translate key=$pageTitle}{/capture}{/if}
 {include file="frontend/components/headerHead.tpl"}
 <body class="pkp_page_{$requestedPage|escape|default:"index"} pkp_op_{$requestedOp|escape|default:"index"}{if $showingLogo} has_site_logo{/if}{if $currentContext && (!$requestedPage || $requestedPage === 'index') && (!$requestedOp || $requestedOp === 'index')} pardalis_home{/if}" dir="{$currentLocaleLangDir|escape|default:"ltr"}">

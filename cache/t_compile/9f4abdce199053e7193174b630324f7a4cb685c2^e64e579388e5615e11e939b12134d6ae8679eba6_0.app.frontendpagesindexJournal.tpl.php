@@ -1,18 +1,18 @@
 <?php
-/* Smarty version 4.3.1, created on 2026-11-03 04:39:08
+/* Smarty version 4.3.1, created on 2026-11-04 04:41:54
   from 'app:frontendpagesindexJournal.tpl' */
 
 /* @var Smarty_Internal_Template $_smarty_tpl */
 if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
   'version' => '4.3.1',
-  'unifunc' => 'content_6ae9656cd3b2a3_35899962',
+  'unifunc' => 'content_6aeab792b04d13_94194884',
   'has_nocache_code' => false,
   'file_dependency' => 
   array (
     'e64e579388e5615e11e939b12134d6ae8679eba6' => 
     array (
       0 => 'app:frontendpagesindexJournal.tpl',
-      1 => 1793679423,
+      1 => 1793767289,
       2 => 'app',
     ),
   ),
@@ -24,7 +24,7 @@ if ($_smarty_tpl->_decodeProperties($_smarty_tpl, array (
     'app:frontend/components/footer.tpl' => 1,
   ),
 ),false)) {
-function content_6ae9656cd3b2a3_35899962 (Smarty_Internal_Template $_smarty_tpl) {
+function content_6aeab792b04d13_94194884 (Smarty_Internal_Template $_smarty_tpl) {
 $_smarty_tpl->_checkPlugins(array(0=>array('file'=>'C:\\laragon\\www\\revista-ojs\\lib\\pkp\\lib\\vendor\\smarty\\smarty\\libs\\plugins\\modifier.count.php','function'=>'smarty_modifier_count',),1=>array('file'=>'C:\\laragon\\www\\revista-ojs\\lib\\pkp\\lib\\vendor\\smarty\\smarty\\libs\\plugins\\modifier.date_format.php','function'=>'smarty_modifier_date_format',),));
 $_smarty_tpl->_subTemplateRender("app:frontend/components/header.tpl", $_smarty_tpl->cache_id, $_smarty_tpl->compile_id, 0, $_smarty_tpl->cache_lifetime, array('pageTitleTranslated'=>$_smarty_tpl->tpl_vars['currentJournal']->value->getLocalizedName()), 0, false);
 ?>
